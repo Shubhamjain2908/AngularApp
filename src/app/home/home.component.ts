@@ -1,15 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import 'rxjs/Rx'
+import {Observer} from "rxjs/Observer";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+
+  numbersCount: Subscription;
+  customCount: Subscription;
 
   constructor() { }
 
   ngOnInit() {
-  }
+    // creating our own observable
+    const myNumbers = Observable.interval(1000)
+      .map( (data: number) => {
+        return data * 2;
+      } );
+    this.numbersCount = myNumbers.subscribe(
+      (number: number) => {
+        console.log(number);
+      }
+    );
 
+    const myObservable = Observable.create( (observer: Observer<string>) => {
+      setTimeout(() => {
+        observer.next('first package');
+      }, 2000);
+      setTimeout(() => {
+        observer.next('second package');
+      }, 4000);
+      setTimeout(() => {
+        observer.complete();
+      }, 6000);
+      setTimeout(() => {
+        observer.next('third package');
+      }, 8000);
+    } );
+    this.customCount = myObservable.subscribe(
+      (data: string) => { console.log(data); },
+      (error: string) => { console.log(error); },
+      () => { console.log('completed'); }
+    );
+  }
+  ngOnDestroy() {
+    this.numbersCount.unsubscribe();
+    this.customCount.unsubscribe();
+  }
 }
