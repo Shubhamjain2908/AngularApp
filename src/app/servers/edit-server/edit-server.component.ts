@@ -40,7 +40,7 @@ export class EditServerComponent implements OnInit, CanComponentDeactivate {
   onUpdateServer() {
     this.serversService.updateServer(this.server.id, {name: this.serverName, status: this.serverStatus});
     this.changesSaved = true;
-    this.router.navigate(['../'],{relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
@@ -50,7 +50,7 @@ export class EditServerComponent implements OnInit, CanComponentDeactivate {
     if ((this.serverName !== this.server.name || this.serverStatus !== this.server.status) && !this.changesSaved) {
       return confirm('Do you really want to leave');
     } else {
-      true;
+      return true;
     }
   }
 }
