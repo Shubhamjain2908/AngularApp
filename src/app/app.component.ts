@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {ServerService} from "./server.service";
+import {Response} from "@angular/http";
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private serverService: ServerService) {}
+  appName = this.serverService.getAppName();
+
   servers = [
     {
       name: 'Testserver',
@@ -27,5 +32,26 @@ export class AppComponent {
   }
   private generateId() {
     return Math.round(Math.random() * 10000);
+  }
+
+  onSaveServer() {
+    this.serverService.storeServers(this.servers).subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
+  }
+
+  onGetServer() {
+    this.serverService.getServers().subscribe(
+      (servers: any[]) => this.servers = servers,
+      (error) => console.log(error)
+    );
+  }
+
+  onEditServer() {
+    this.serverService.editServers(this.servers).subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
   }
 }
