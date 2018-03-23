@@ -1,10 +1,10 @@
-import { NewCliPage } from './app.po';
+import { Ng4CompleteGuidePage } from './app.po';
 
-describe('new-cli App', () => {
-  let page: NewCliPage;
+describe('ng4-complete-guide App', function() {
+  let page: Ng4CompleteGuidePage;
 
   beforeEach(() => {
-    page = new NewCliPage();
+    page = new Ng4CompleteGuidePage();
   });
 
   it('should display message saying app works', () => {
