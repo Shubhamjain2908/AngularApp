@@ -16,7 +16,7 @@ import {ShoppingListService} from "./services/shopping-list.service";
 import {AppRoutingModules} from "./app-routing.modules";
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 
 
@@ -37,10 +37,11 @@ import {HttpModule} from "@angular/http";
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModules
   ],
-  providers: [RecipeService, ShoppingListService],
+  providers: [RecipeService, ShoppingListService],    // From here the service instanse is shared by all components
   bootstrap: [AppComponent]
 })
 export class AppModule { }

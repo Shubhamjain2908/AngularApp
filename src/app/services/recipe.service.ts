@@ -2,9 +2,12 @@ import {Recipe} from "../recipes/recipe-list/recipe.model";
 import {Injectable} from "@angular/core";
 import {Ingredient} from "../shared/ingredient.model";
 import {ShoppingListService} from "./shopping-list.service";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
-export class RecipeService{
+export class RecipeService {
+  // used to fix the unsaved bug
+  recipeChanged = new Subject<Recipe[]>();
 
   constructor(private slService: ShoppingListService) {}
 
@@ -37,5 +40,20 @@ export class RecipeService{
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipeChanged.next(this.recipes.slice());    // passing copy of new/updated array
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice());    // passing copy of new/updated array
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipeChanged.next(this.recipes.slice());
   }
 }
