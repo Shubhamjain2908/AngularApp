@@ -1,11 +1,10 @@
-// File used to restrict user to access new recipe and edit recipe if not logged in
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
 
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular/router";
-import {AuthService} from "./auth.service";
-import {Injectable} from "@angular/core";
+import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService) {}
 
