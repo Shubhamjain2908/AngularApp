@@ -10,6 +10,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
+  res: any;
   constructor(private dataStorageService: DataStorageService,
               private authService: AuthService) {
   }
@@ -18,7 +19,9 @@ export class HeaderComponent {
     this.dataStorageService.storeRecipes()
       .subscribe(
         (response) => {
+          this.res = response;
           console.log(response);
+          console.log('Progress : ' + this.res.loaded / this.res.total);    // For showing % progress
         }
       );
   }
